@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Valentine 💘</title>
+<title>Valentine 💖</title>
 <style>
 body{
   background:pink;
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   text-align:center;
   overflow:hidden;
-  padding-top:70px;
+  padding-top:80px;
 }
-h1{color:#b30059}
+h1,h2{color:#b30059}
 p{font-size:22px;color:#800040}
 button{
-  padding:12px 24px;
+  padding:14px 28px;
   font-size:18px;
-  border-radius:20px;
+  border-radius:30px;
   border:none;
-  margin:10px;
   cursor:pointer;
+  margin:15px;
 }
-#yes{background:#ff4d88;color:white}
-#no{position:absolute;background:#ddd}
+#surprise,#yes{background:#ff4d88;color:#fff}
+#no{background:#ddd;position:absolute}
+.hidden{display:none}
 
-.dance{
-  font-size:60px;
-  animation:dance 0.6s infinite alternate;
-}
-@keyframes dance{
-  from{transform:rotate(-15deg) translateY(0)}
-  to{transform:rotate(15deg) translateY(-20px)}
+#yes{
+  transition:transform 0.3s;
 }
 
 .heart{
   position:fixed;
   bottom:-20px;
+  font-size:24px;
   animation:float 4s linear infinite;
 }
 @keyframes float{
@@ -44,45 +41,70 @@ button{
 </head>
 
 <body>
-<h1>Hey You 😌💖</h1>
 
-<p>
-Are you Shahrah-e-Faisal? 😏<br>
-Because I’m stuck on you 💘<br><br>
-Will you be my Valentine<br>
-for the rest of my life? ❤️
-</p>
+<!-- PAGE 1 -->
+<div id="page1">
+  <h1>Hey You 😌💖</h1>
+  <p>
+    Are you Shahrah-e-Faisal?<br>
+    ’Cause I’m stuck on you 😏💘
+  </p>
+  <button id="surprise" onclick="next()">Click for a surprise 🎁</button>
+</div>
 
-<button id="yes" onclick="yesClick()">Yes 💖</button>
-<button id="no" onmouseover="moveNo()">No 🙈</button>
+<!-- PAGE 2 -->
+<div id="page2" class="hidden">
+  <h2>Important Question 😳💘</h2>
+  <p>
+    Will you be my Valentine<br>
+    for the rest of my life? ❤️
+  </p>
+  <button id="yes" onclick="yesClick()">YES 💖</button>
+  <button id="no" onmouseover="runNo()">NO 🙈</button>
+</div>
 
-<div id="party"></div>
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <h2>I KNEW YOU’D SAY YES 😌💖</h2>
+  <img src="https://media.giphy.com/media/l0MYB8Ory7Hqefo9a/giphy.gif" width="180">
+  <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="180">
+</div>
 
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+  <source src="https://dl.sndup.net/m7w5/LoveStory.mp3">
 </audio>
 
 <script>
-function moveNo(){
+let scale=1;
+const no=document.getElementById("no");
+
+function next(){
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+}
+
+function runNo(){
   no.style.left=Math.random()*80+"%";
   no.style.top=Math.random()*80+"%";
+  scale+=0.1;
+  yes.style.transform="scale("+scale+")";
 }
 
 function yesClick(){
-  document.getElementById("music").play();
-  document.getElementById("party").innerHTML=
-  "<div class='dance'>💃🕺💃🕺</div><h2>WE’RE DANCING NOW 💖</h2>";
+  page2.classList.add("hidden");
+  final.classList.remove("hidden");
+  music.play();
 
   setInterval(()=>{
     let h=document.createElement("div");
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"%";
-    h.style.fontSize=Math.random()*30+20+"px";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
-  },250);
+  },300);
 }
 </script>
+
 </body>
 </html>
